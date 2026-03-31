@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CyberShield - Learn: Phishing Awareness</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="learn.css" />
+  <script src="learn.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>🛡 CyberShield</h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="learn.html" class="active">Learn</a>
+      <a href="../play/play.html">Play</a>
+      <a href="../tips/tips.html">Tips</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </header>
+
+  <main class="learn-container">
+    <section class="intro">
+      <h1>Learn About Phishing</h1>
+      <p>
+        Phishing is a form of online scam where attackers trick users into revealing personal information
+        such as passwords, OTPs, or credit card numbers by pretending to be trustworthy entities.
+        Learn how to identify and avoid them.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>How Phishing Works</h2>
+      <p>
+        Cybercriminals send fake messages that appear to come from legitimate sources. They often create a
+        sense of urgency to make victims act quickly without verifying authenticity.
+      </p>
+      <div class="examples">
+        <div class="example">
+          <strong>Example 1:</strong> “Your account will be suspended! Verify now.”
+          <p class="clue">Clue: Creates unnecessary urgency to trick users.</p>
+        </div>
+        <div class="example">
+          <strong>Example 2:</strong> “Click this link to confirm your password.”
+          <p class="clue">Clue: No legitimate company will ask for passwords or OTPs through links.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Checklist for Safety</h2>
+      <ul id="checklist">
+        <li>✅ Verify sender’s full address or phone number.</li>
+        <li>✅ Hover over links before clicking.</li>
+        <li>✅ Never share confidential details.</li>
+        <li>✅ Contact the organization directly through official channels.</li>
+        <li>✅ Report suspicious messages to your security team.</li>
+      </ul>
+      <div class="buttons">
+        <button onclick="printChecklist()">🖨 Print / Save Checklist</button>
+      </div>
+    </section>
+
+    <section class="faq-section container">
+      <h2>❓ Frequently Asked Questions</h2>
+
+      <div class="faq">
+        <button class="faq-question">1. What is phishing?</button>
+        <div class="faq-answer">
+          <p>Phishing is an online scam where attackers impersonate trusted sources to steal information.</p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <button class="faq-question">2. How can I identify a fake email?</button>
+        <div class="faq-answer">
+          <p>Watch for spelling errors, suspicious senders, and mismatched URLs.</p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <button class="faq-question">3. What should I do if I click a scam link?</button>
+        <div class="faq-answer">
+          <p>
+            Disconnect immediately, change passwords, and report it at
+            <a href="https://cybercrime.gov.in" target="_blank">cybercrime.gov.in</a>.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <button class="faq-question">4. Is it safe to use public Wi-Fi?</button>
+        <div class="faq-answer">
+          <p>Avoid public Wi-Fi for sensitive tasks; use a VPN if needed.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 CyberShield | Be Alert. Stay Secure.</p>
+  </footer>
+</body>
+</html>

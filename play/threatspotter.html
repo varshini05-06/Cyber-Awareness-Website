@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Threatspotter - Spot the Threat</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --container-bg: #282828;
+            --text-color: #f0f0f0;
+            --border-color: #444;
+            --highlight-color: #555;
+            --success-color: #4CAF50; 
+            --error-color: #F44336; 
+            --link-color: #8c8c8c;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: var(--container-bg);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            max-width: 650px;
+            width: 100%;
+            border: 1px solid var(--border-color);
+        }
+
+        h1 {
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 5px;
+            font-size: 1.8em;
+        }
+
+        .instruction {
+            text-align: center;
+            color: var(--link-color);
+            margin-bottom: 25px;
+        }
+
+        .email-mockup {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 25px;
+            background-color: #333333;
+        }
+
+        .email-header {
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            font-size: 0.9em;
+        }
+
+        .email-body p {
+            line-height: 1.6;
+        }
+
+        .call-to-action a {
+            color: var(--link-color);
+            text-decoration: underline;
+        }
+
+        .phishing-target {
+            cursor: pointer;
+            font-weight: bold;
+            padding: 2px 4px;
+            transition: background-color 0.15s, color 0.15s;
+            display: inline-block;
+        }
+
+        .phishing-target:hover {
+            background-color: var(--highlight-color);
+            color: #fff;
+            border-radius: 2px;
+        }
+
+        .highlight-correct {
+            background-color: var(--success-color);
+            color: #000;
+            border-radius: 2px;
+            font-weight: 700;
+        }
+
+        .feedback {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+            border: 1px solid;
+        }
+
+        .correct {
+            background-color: #3a473b;
+            color: var(--success-color);
+            border-color: var(--success-color);
+        }
+
+        .incorrect {
+            background-color: #4a3a3a;
+            color: var(--error-color);
+            border-color: var(--error-color);
+        }
+
+        #reset-button {
+            display: block;
+            margin: 20px auto 0;
+            padding: 10px 20px;
+            background-color: var(--highlight-color);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.2s;
+        }
+
+        #reset-button:hover {
+            background-color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SECURITY ALERT</h1>
+        <p class="instruction" id="instruction-text">Click on all the suspicious elements in the email to pass the security test.</p>
+
+        <div class="email-mockup" id="email-container"></div>
+
+        <div id="feedback" class="feedback"></div>
+        <button id="reset-button" style="display: none;">Start New Test</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const scenarios = [
+                {
+                    id: 'amazon',
+                    clues: ['sender-address', 'subject-urgency', 'link-suspicious', 'greeting-vague'],
+                    html: `
+                        <div class="email-header">
+                            <p>From: <span class="phishing-target" data-target="sender-address">admin@amaz0n-support.com</span></p>
+                            <p>To: user@example.com</p>
+                            <p>Subject: <span class="phishing-target" data-target="subject-urgency">Immediate Action Required: Unauthorized Purchase</span></p>
+                        </div>
+                        <div class="email-body">
+                            <p><span class="phishing-target" data-target="greeting-vague">Dear Valued Customer,</span></p>
+                            <p>A recent purchase of an Apple Watch ($799.00) has been charged to your account. This transaction was flagged as high-risk.</p>
+                            <p>If this was not you, you must cancel the order immediately to prevent shipping and a permanent charge to your credit card.</p>
+                            <p class="call-to-action">
+                                <a href="#" class="phishing-target" data-target="link-suspicious">*Click Here to STOP the Transaction and View Invoice*</a>
+                            </p>
+                            <p>Failure to click the cancellation link within the next 30 minutes will confirm the order.</p>
+                            <p>Thank you,</p>
+                            <p>Amazon Security Team</p>
+                        </div>
+                    `
+                },
+                {
+                    id: 'microsoft',
+                    clues: ['sender-address', 'link-suspicious', 'greeting-vague', 'grammatical-error'],
+                    html: `
+                        <div class="email-header">
+                            <p>From: <span class="phishing-target" data-target="sender-address">security@micro-soft.co</span></p>
+                            <p>To: user@example.com</p>
+                            <p>Subject: Your password expires today</p>
+                        </div>
+                        <div class="email-body">
+                            <p><span class="phishing-target" data-target="greeting-vague">Hello User,</span></p>
+                            <p>Your Microsoft 365 password is due to expire. You must reset it now to keep access to all your files. The system cannot wait.</p>
+                            <p>If you fail to reset <span class="phishing-target" data-target="grammatical-error">their</span> password, your account will be locked permanent.</p>
+                            <p class="call-to-action">
+                                <a href="#" class="phishing-target" data-target="link-suspicious">Click Here to Renew Your Password Securely</a>
+                            </p>
+                            <p>Thanks,</p>
+                            <p>The Microsoft Team</p>
+                        </div>
+                    `
+                },
+                {
+                    id: 'bank',
+                    clues: ['sender-address', 'subject-urgency', 'link-suspicious', 'greeting-vague'],
+                    html: `
+                        <div class="email-header">
+                            <p>From: <span class="phishing-target" data-target="sender-address">alerts@bank-of-america.net</span></p>
+                            <p>To: user@example.com</p>
+                            <p>Subject: <span class="phishing-target" data-target="subject-urgency">Notification of Locked Account and Immediate Review</span></p>
+                        </div>
+                        <div class="email-body">
+                            <p><span class="phishing-target" data-target="greeting-vague">Account Holder,</span></p>
+                            <p>We detected multiple failed login attempts on your banking portal. For your protection, your account is temporarily restricted.</p>
+                            <p>To avoid permanent closure, you are required to confirm your identity by clicking the link below.</p>
+                            <p class="call-to-action">
+                                <a href="#" class="phishing-target" data-target="link-suspicious">Verify Your Identity Here</a>
+                            </p>
+                            <p>You have 15 minutes to comply before the restriction becomes permanent.</p>
+                            <p>Sincerely,</p>
+                            <p>Bank of America Security Department</p>
+                        </div>
+                    `
+                },
+                {
+                    id: 'hr',
+                    clues: ['sender-address', 'subject-urgency', 'link-suspicious', 'attachment-suspicious'],
+                    html: `
+                        <div class="email-header">
+                            <p>From: <span class="phishing-target" data-target="sender-address">hr-payroll@yourcompany.co.org</span></p>
+                            <p>To: All Employees</p>
+                            <p>Subject: <span class="phishing-target" data-target="subject-urgency">Critical: New Policy & Backpay Calculation Error</span></p>
+                        </div>
+                        <div class="email-body">
+                            <p>Hi Team,</p>
+                            <p>Please find attached the new mandatory HR policy regarding remote work stipends. This policy is effective immediately.</p>
+                            <p>Due to a calculation error, a backpay adjustment must be made. Please open the attachment and click 'Agree' to confirm your payment information for the immediate wire transfer.</p>
+                            <p class="call-to-action">
+                                <a href="#" class="phishing-target" data-target="link-suspicious">Click Here to Download and Review the Policy</a>
+                            </p>
+                            <p>Attachment: <span class="phishing-target" data-target="attachment-suspicious">PAYROLL_UPDATE_Q4.zip</span></p>
+                            <p>Best Regards,</p>
+                            <p>HR Department</p>
+                        </div>
+                    `
+                }
+            ];
+
+            const emailContainer = document.getElementById('email-container');
+            const feedbackDiv = document.getElementById('feedback');
+            const resetButton = document.getElementById('reset-button');
+            const instructionText = document.getElementById('instruction-text');
+
+            let currentScenario = null;
+            let clickedCorrectTargets = new Set();
+            let gameActive = true;
+            let lastScenarioId = null;
+
+            function selectNewScenario() {
+                const availableScenarios = scenarios.filter(s => s.id !== lastScenarioId);
+                const randomIndex = Math.floor(Math.random() * availableScenarios.length);
+                currentScenario = availableScenarios[randomIndex];
+                lastScenarioId = currentScenario.id;
+            }
+
+            function loadScenario() {
+                gameActive = true;
+                clickedCorrectTargets.clear();
+                feedbackDiv.style.display = 'none';
+                resetButton.style.display = 'none';
+
+                selectNewScenario();
+                emailContainer.innerHTML = currentScenario.html;
+
+                instructionText.innerHTML = `Click on all ${currentScenario.clues.length} suspicious elements in the email to pass the security test.`;
+
+                const targets = emailContainer.querySelectorAll('.phishing-target');
+                targets.forEach(target => {
+                    target.addEventListener('click', handleTargetClick);
+                    target.style.pointerEvents = 'auto';
+                });
+            }
+
+            function handleTargetClick(e) {
+                e.preventDefault();
+
+                const target = e.currentTarget;
+                const targetType = target.getAttribute('data-target');
+
+                if (!gameActive || clickedCorrectTargets.has(targetType)) return;
+
+                if (currentScenario.clues.includes(targetType)) {
+                    target.classList.add('highlight-correct');
+                    clickedCorrectTargets.add(targetType);
+
+                    const name = targetType.replace('-', ' ');
+                    showFeedback(`Threat spotted! You identified the suspicious ${name}.`, 'correct');
+
+                    if (clickedCorrectTargets.size === currentScenario.clues.length) {
+                        endGame(true);
+                    }
+                } else {
+                    showFeedback('That element appears secure. Keep looking for the clear threats!', 'incorrect');
+                }
+            }
+
+            function showFeedback(message, type) {
+                feedbackDiv.textContent = `(${clickedCorrectTargets.size}/${currentScenario.clues.length} found) ${message}`;
+                feedbackDiv.className = `feedback ${type}`;
+                feedbackDiv.style.display = 'block';
+            }
+
+            function endGame(isWin) {
+                gameActive = false;
+                const targets = emailContainer.querySelectorAll('.phishing-target');
+                targets.forEach(target => target.style.pointerEvents = 'none');
+                resetButton.style.display = 'block';
+
+                if (isWin) {
+                    showFeedback('SUCCESS! You correctly identified ALL phishing threats and passed the security test!', 'correct');
+                } else {
+                    showFeedback('GAME OVER. You failed to spot all the threats.', 'incorrect');
+                }
+            }
+
+            resetButton.addEventListener('click', loadScenario);
+            loadScenario();
+        });
+    </script>
+</body>
+</html>

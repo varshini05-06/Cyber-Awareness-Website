@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CyberShield – Play</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="play.css">
+</head>
+
+<body>
+  <header>
+    <h1>🛡 CyberShield</h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../learn/learn.html">Learn</a>
+      <a href="play.html" class="active">Play</a>
+      <a href="../tips/tips.html">Tips</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>🎮 Play & Learn — Cyber Safety Games</h2>
+    <p>Test your ability to identify phishing scams through fun and interactive games!</p>
+  </section>
+
+  <section class="features play-container">
+    <div class="game-buttons">
+      <button onclick="showGame('threadspotter')">🧵 Threatspotter</button>
+      <button onclick="showGame('quiz')">❓ Phishing IQ Quiz</button>
+    </div>
+
+    <div class="game-display">
+      <div id="threadspotter" class="game-section">
+        <h3>🧵 Threatspotter</h3>
+        <p>Identify fake messages from real ones! Watch the thread and spot suspicious clues in each conversation.</p>
+        <iframe data-src="Threatspotter.html" id="iframe-threadspotter"></iframe>
+      </div>
+
+      <div id="quiz" class="game-section">
+        <h3>❓ Phishing Awareness Quiz</h3>
+        <p>Answer quick questions to test your scam detection knowledge.</p>
+        <iframe data-src="quiz.html" id="iframe-quiz"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 CyberShield | Play Smart. Stay Safe.</p>
+  </footer>
+
+  <script src="play.js"></script>
+</body>
+</html>
